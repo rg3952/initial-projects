@@ -1,0 +1,65 @@
+import random
+
+# generate_code
+# Input: length (int)
+# Processing: generate a secret code.  The code should have the number of digits specified by length, 
+#             using the digits 1 - 9, and without any repeats.
+# Return: the secret code (str)
+
+def generate_code(x):
+    numbers = random.sample(range(1, 10), x) # generate a random number using digits 1-9, second argument is how many values in the range appear
+    code = ''
+    for i in numbers:
+        code += str(i) # concatenate values
+    return code
+
+# digits_in_code
+# Input: guess (str), code (str)
+# Processing: count each digit in guess that also appears in the code
+# Return: the count (int)
+
+def digits_in_code(guess, code):
+    count = 0
+    for i in str(guess): 
+        for j in str(code):
+            if i == j: # if digit is found in both code and digit, increase count by 1
+                count += 1
+    return count
+
+# digits_in_place
+# Input: guess (str), code (str)
+# Processing: count each digit that appears in the same place in both guess and code
+# Return: the count (int)
+
+def digits_in_place(guess, code):
+    count_1 = 0
+    digi = len(str(code)) # length of the code
+    for i in range(digi): # for i between 0 and the length of code
+        if str(guess)[i] == str(code)[i]: # if the indices are equal, add one to count_1
+            count_1 += 1
+    return count_1
+
+while True:
+    code_length = int(input("How long should the secret code be (from 2 to 8)? "))
+    if code_length >= 2 and code_length <= 8:
+        code = generate_code(code_length)
+        break
+    else:
+        print("The number should be between and including 2 and 8.")
+
+tries = 0
+
+while code_length >= 2 and code_length <= 8:
+    guess = int(input("What is your guess? "))
+    if len(str(guess)) == code_length:
+        common_digits = digits_in_code(guess, code)
+        exact_place = digits_in_place(guess, code)
+        tries += 1
+        if guess == int(code):
+            print("You guessed it in", tries, "turns!")
+            break
+        else:
+            print(common_digits, "digits are in the code, and", exact_place, "digits are in the correct place.")
+    else:
+        print("Guess must be", code_length, "digits long.")
+        continue
