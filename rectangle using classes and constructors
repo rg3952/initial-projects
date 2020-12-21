@@ -1,0 +1,47 @@
+class Rectangle:
+
+    # constructor
+    # input: width of rect, length of rect, x and y coordinates of rect
+    # processing: initialize instance variables (width, length, xpos, ypos)
+    # output: this object
+    
+    def __init__(self, width, length, xpos, ypos):
+        self.width = width
+        self.length = length
+        self.xpos = xpos
+        self.ypos = ypos
+        
+    # method: get_area
+    # input: nothing
+    # processing: calculate area by multiplying length and width
+    # output: area
+    
+    def get_area (self):
+        return self.length * self.width
+
+    # method: get_perimeter
+    # input: nothing
+    # processing: calculate perimeter by adding 2l + 2w
+    # output: perimeter
+    
+    def get_perimeter (self):
+        perimeter = ( 2 * self.length ) + ( 2 * self.width )
+        return perimeter
+
+
+rect = Rectangle (10, 15, 5, 3)
+
+print ("Rectangle #1")
+print ("* Coordinates: ", "(", rect.xpos, ", ", rect.ypos, ")", sep= "")
+print ("* Area: ", rect.get_area() )
+print ("* Perimeter: ", rect.get_perimeter() )
+
+print ()
+
+rect = Rectangle (3, 5, 15, 7)
+
+print ("Rectangle #2")
+print ("* Coordinates: ", "(", rect.xpos, ",", rect.ypos, ")", sep= "")
+print ("* Area: ", rect.get_area() )
+print ("* Perimeter: ", rect.get_perimeter() )
+
