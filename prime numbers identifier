@@ -1,0 +1,54 @@
+# import time module to figure out how long program takes to generate all prime numbers
+
+import time
+
+# initialize z value to determine # of total prime numbers
+
+z = 0
+
+# input validation loop for user inputted x and y values
+
+while True:
+    x = int(input("Start number: "))
+    y = int(input("End number: "))
+    len_end = len(str(y))
+    len_end_string = str(len_end)
+
+    start = time.time()
+
+    if x <= 0 or y <= 0:
+        print("Start and end must be positive")
+    else:
+        if y < x:
+            print("End number must be greater than start number")
+        else:
+            print("All primes between", x, "and", y, ":")
+            break
+
+# for every value between x and y, if the value is prime, tell the user
+
+# add 1 to z for every iteration
+
+for i in range(x, y+1):
+    if i == 1:
+        continue
+
+# if i is divisble by any number between 2 and itself, it is not prime
+
+    for j in range(2,i):
+        if(i % j==0):
+            break
+    else:
+        z += 1
+        print(format(i, ">"+len_end_string), end = " ")
+        if z % 10 == 0:
+            print()
+
+end = time.time()
+
+print()
+
+# end time - start time = total time
+
+print("Execution time: ", round(end-start, 2), "seconds")
+
