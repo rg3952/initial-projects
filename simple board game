@@ -1,0 +1,117 @@
+import random
+
+# this function returns two random values for the dice roll
+
+def roll_dice(x):
+    a = random.randint(1,x)
+    b = random.randint(1,x)
+    return (a, b)
+
+# this function returns the new space of the player as well as the number of board rotations
+
+def move_piece(current_space, num_spaces, total_spaces):
+    new_space = current_space + num_spaces
+    board_rotation = new_space / total_spaces
+    if board_rotation > 1:
+        board_rotation = 1
+    else:
+        board_rotation = 0
+    if new_space > total_spaces:
+        new_space = new_space % total_spaces
+    return (new_space, board_rotation)
+
+# input validation loop for spaces on game board
+
+while True:
+    total_spaces = int(input("How many spaces on your game board? "))
+    if total_spaces >= 10 and total_spaces <= 40:
+        print()
+        print("Both players start on space number 1.")
+        print("First player to circle the board 3 times wins!")
+        print()
+        break
+    elif total_spaces > 40:
+        print("That board is too long to be fun.")
+    elif total_spaces < 10:
+        print("That board is too short to be fun.")
+
+# while loop, user can specify sides on the dice or revert to default, which is 6.
+        
+while total_spaces <= 40 and total_spaces >= 10:
+    dice_side = input("Would you like to specify dice side (yes or no)? ")
+    if dice_side == "yes":
+        x = int(input("How many sides? "))
+        print()
+        break
+    else:
+        print()
+        x = 6
+        break
+
+# accumulator variables for loop, where the current space of both players is 1 and the rest of the values are 0
+    
+p1_current_space = 1
+p2_current_space = 1
+player = 1
+p1_turns = 0
+p2_turns = 0
+p1_circulation = 0
+p2_circulation = 0
+
+while True:
+    # roll dice function, values of dice roll = a and b; adding them together to help determine new position
+    a, b = roll_dice(x)
+    num_spaces = a + b
+
+    # first, run the following block of code when it's player 1's turn
+    # create new variables equal to the new space and number of board rotations 
+
+    if player == 1:
+        new_space, board_rotation = move_piece(p1_current_space, num_spaces, total_spaces)
+        
+        # p1_circulation accumulates the number of board rotations
+        # p1_turns adds 1 every time player 1 takes a turn.
+        
+        p1_circulation += board_rotation
+        p1_turns += 1
+        print("Player", player, "rolled:", a, "and", b)
+
+        # make sure 1 time displays properly (i.e. so that it doesn't say "1 times")
+        
+        if p1_circulation == 0 or p1_circulation > 1:
+            print("Player", player, "is on space", new_space, "and has gone around the board", p1_circulation, "times.")
+        elif p1_circulation == 1:
+            print("Player", player, "is on space", new_space, "and has gone around the board", p1_circulation, "time.")
+        print()
+        p1_current_space = new_space
+    elif player == 2:
+        new_space, board_rotation = move_piece(p2_current_space, num_spaces, total_spaces)
+        p2_circulation += board_rotation
+        p2_turns += 1
+        print("Player", player, "rolled:", a, "and", b)
+        if p2_circulation == 0 or p2_circulation > 1:
+            print("Player", player, "is on space", new_space, "and has gone around the board", p2_circulation, "times.")
+        elif p2_circulation == 1:
+            print("Player", player, "is on space", new_space, "and has gone around the board", p2_circulation, "time.")
+        print()
+        p2_current_space = new_space
+        
+    # determining winner
+        
+    if p1_circulation == 3 and player == 1:
+        print("Player", player, "won in", p1_turns, "turns.")
+        break
+    elif p2_circulation == 3 and player == 2:
+        print("Player", player, "won in", p2_turns, "turns.")
+        break
+    
+    # every time player 1 takes a turn, add 1 to the player number to make it 2
+    # every time player 2 takes a turn, subtract 1 from the player number to make it 1
+    
+    elif player == 1:
+        player += 1
+        p1_turns += 1
+    elif player == 2:
+        player -= 1
+        p2_turns += 2
+
