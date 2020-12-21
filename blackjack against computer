@@ -1,0 +1,116 @@
+import random
+
+cards  = ['10 of Hearts', '9 of Hearts', '8 of Hearts', '7 of Hearts', '6 of Hearts', 
+          '5 of Hearts', '4 of Hearts', '3 of Hearts', '2 of Hearts', 'Ace of Hearts', 
+          'King of Hearts', 'Queen of Hearts', 'Jack of Hearts', '10 of Diamonds', 
+          '9 of Diamonds', '8 of Diamonds', '7 of Diamonds', '6 of Diamonds', 
+          '5 of Diamonds', '4 of Diamonds', '3 of Diamonds', '2 of Diamonds', 
+          'Ace of Diamonds', 'King of Diamonds', 'Queen of Diamonds', 'Jack of Diamonds', 
+          '10 of Clubs', '9 of Clubs', '8 of Clubs', '7 of Clubs', '6 of Clubs', 
+          '5 of Clubs', '4 of Clubs', '3 of Clubs', '2 of Clubs', 'Ace of Clubs', 
+          'King of Clubs', 'Queen of Clubs', 'Jack of Clubs', '10 of Spades', 
+          '9 of Spades', '8 of Spades', '7 of Spades', '6 of Spades', '5 of Spades', 
+          '4 of Spades', '3 of Spades', '2 of Spades', 'Ace of Spades', 
+          'King of Spades', 'Queen of Spades', 'Jack of Spades']
+
+values = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 10, 10, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 
+          10, 10, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 10, 10, 10, 10, 9, 8, 7, 6, 5, 
+          4, 3, 2, 1, 10, 10, 10]
+
+# deal
+# Input: nothing
+# Processing: Randomly choose a card and remove it from the deck
+# Output: The name of the card (str) and the point value for the card (int)
+# Side effects: Modifies the global lists of cards and values
+def deal():
+    global cards
+    global values
+    card_name = random.choice(cards)
+    card_index = cards.index(card_name)
+    points = values[card_index]
+    cards.remove(card_name)
+    del values[card_index]
+    return card_name, points
+
+
+# init_hand
+# Input: nothing
+# Processing: Deal two cards into the player's hand, by calling the deal function twice
+# Output: three values: a list for the card names dealt, a list for the values of those 
+#        cards, and an int which is the total point value of the cards just dealt (int)
+def init_hand():
+    card1,point1 = deal()
+    card2,point2 = deal()
+    card_list = [card1, card2]
+    point_list = [point1, point2]
+    total_p_value = point1 + point2
+    return card_list, point_list, total_p_value
+
+# reset_deck
+# Input: List of the cards in the hand, and parallel list of the card values
+# Processing: Puts the hands (and values) back in the deck (add them to the
+#       main lists of cards and values)
+# Output: Nothing
+def reset_deck(card_list, point_list):
+    global cards
+    global values
+    card1 = card_list[0]
+    card2 = card_list[1]
+    point1 = point_list[0]
+    point2 = point_list[1]
+    cards.append(card1)
+    cards.append(card2)
+    values.append(point1)
+    values.append(point2)
+
+
+player_dealt, player_point_list, total_player_points = init_hand()
+print("Player hand:", player_dealt, "is worth", total_player_points) 
+while True:
+    move = input("(h)it or (s)tand? ")
+    if move == 'h': # two options: hit or stand
+        player_card, player_point = deal()
+        print("You drew", player_card)
+        player_dealt.append(player_card) # add drawn card to player_card
+        total_player_points += player_point
+        print("Player hand:", player_dealt, "is worth", total_player_points) # total points calculated by accumulating player point
+    elif move == 's':
+        comp_dealt, comp_point_list, total_comp_points = init_hand()
+        print("Computer hand:", comp_dealt, "is worth,", total_comp_points) 
+        while move == 's':
+            comp_card, comp_point = deal() # call deal function again but this time for computer
+            print("Computer drew", comp_card) 
+            comp_dealt.append(comp_card)
+            total_comp_points += comp_point
+            print("Computer hand:", comp_dealt, "is worth,", total_comp_points)
+            if total_comp_points == 21: # 21 to win 
+                print("Blackjack!")
+                print("Computer wins!")
+                reset_deck(comp_dealt, comp_point_list) # reset deck after game is over
+                reset_deck(player_dealt, player_point_list)
+                break
+            if total_comp_points > 21: # if total points > 21, game is over and opponent wins 
+                print("Bust!")
+                print("Player wins!")
+                reset_deck(comp_dealt, comp_point_list)
+                reset_deck(player_dealt, player_point_list)
+                break
+            if total_comp_points > total_player_points: # if computer has more points, computer wins 
+                print("Computer wins!")
+                reset_deck(comp_dealt, comp_point_list)
+                reset_deck(player_dealt, player_point_list)
+                break
+        break
+    else:
+        print("Invalid")
+    if total_player_points > 21:
+        print("Bust!")
+        print("Computer wins!")
+        reset_deck(player_dealt, player_point_list)
+        break
+    if total_player_points == 21:
+        print("Blackjack!")
+        print("Player wins!")
+        reset_deck(player_dealt, player_point_list)
+        break
+
