@@ -1,0 +1,46 @@
+def is_float(x):
+    count = 0
+    var = 0
+    for i in x:
+
+        # is a float if it is negative 
+        if i == '-':
+            var += 1
+    if var > 1:
+        return False
+
+    # the minus sign must be at index 0: if it is, tell the program to get rid of the minus sign so it is recognized as a regular float
+    
+    elif var == 1 and x[0] == '-':
+        x = x.replace('-',"")
+
+    # if it has one decimal place, it is a float, cannot have more than that
+    
+    for i in x:
+        if i == '.':
+            count += 1
+    if count > 1:
+        return False
+    else:
+        x = x.replace('.',"")
+    if x.isnumeric() == True:
+        return True
+    else:
+        return False
+
+invalid = True
+
+while invalid:
+    num1 = input("Enter a floating point number: ")
+    if is_float(num1) == False:
+        print("That isn't a number.")
+    else:
+        print("Great.")
+        while True:
+            num2 = input("Enter another floating point number: ")
+            if is_float(num2) == True:
+                print("Great")
+                invalid = False
+                break
+            else:
+                print("That isn't a number.")
