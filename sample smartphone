@@ -1,0 +1,128 @@
+class Smartphone:
+
+	# method: constructor
+	# input: capacity of iPhone, name of iPhone
+	# processing: keeps track of variables capacity, total capacity, name, apps. when a phone is constructed the 'report' method is called.
+	# output: nothing
+	
+	def __init__(self, capacity, name):
+		self.capacity = capacity
+		self.total_capacity = capacity
+		self.name = name
+		self.apps = {}
+		self.report()
+
+	# method: add_app
+	# input: appname, appsize
+	# processing: adds new app to phone given an appname (string) and an appsize (integer). if the app is already installed, reject it.  
+	# if the phone cannot hold any additional apps because the capacity has been reached, reject it.
+	# output: returns nothing, prints desired output to user
+	
+	def add_app(self, appname, appsize):
+		if self.has_app(appname) == False and appsize <= self.capacity:
+			self.apps[appname] = appsize
+			self.capacity -= appsize
+		elif self.has_app(appname) == False and appsize > self.capacity:
+			print("Cannot install app, no available space.")
+		elif self.has_app(appname) == True:
+			print("App already installed.")
+
+	# method: remove_app
+	# input: appname
+	# processing: removes an app from the phone based on appname (string). if the app is not installed, reject it.
+	# output: returns nothing, prints desired output to the user
+	
+	def remove_app(self, appname):
+		if self.has_app(appname) == True:
+			self.capacity += self.apps[appname]
+			del self.apps[appname]
+			print("App removed:", appname)
+		elif self.has_app(appname) == False:
+			print("App not installed.")
+
+        # method: has_app
+        # input: appname
+        # processing: checks to see if an app is installed based on appname (string)
+        # output: returns True if the app is installed, False if it is not
+        
+	def has_app(self, appname):
+		if appname in self.apps:
+			return True
+		else:
+			return False
+		
+        # method: get_available_space
+        # input: none
+        # processing: none
+        # output: returns the current space available on the phone (integer)
+        
+	def get_available_space(self):
+		return self.capacity
+
+        # method: report
+        # input: none
+        # processing: prints detailed report 
+        # output: returns nothing, prints the desired output to the user
+        
+	def report(self):
+		print("Name:", self.name)
+		print("Capacity:", self.total_capacity - self.capacity, "out of", self.total_capacity, "GB")
+		print("Available space:", self.capacity)
+		print("Apps Installed:", len(self.apps))
+		for app in self.apps.keys():
+			print("*", app, "is using", self.apps[app], "GB.")
+
+while True:
+
+        # user input to determine size of phone
+        
+	capacity = input("Size of your new smartphone (32, 64 or 128 GB): ")
+
+	# if capacity can be turned into an int, it might be valid, if not, print invalid and reprompt
+	
+	try:
+		capacity = int(capacity)
+	except:
+		print("Invalid")
+		continue
+	else:
+
+                # capacity must be 32, 64, or 128
+                
+		if capacity == 32 or capacity == 64 or capacity == 128:
+			name = input("Smartphone name: ")
+			print("Smartphone created!")
+			phone = Smartphone(capacity, name)
+			break
+		else:
+			print("Invalid")
+			continue
+
+while True:
+	print()
+
+	# accept uppercase versions of letters
+	
+	function = str.lower(input("(r)eport, (a)dd app, r(e)move app or (q)uit: "))
+	if function == "r":
+		phone.report()
+	elif function == "a":
+
+                # prompt the user to enter the name and size of the app they wish to add
+                # call add_app function
+                
+		appname = input("App name to add: ")
+		appsize = int(input("App size in GB: "))
+		phone.add_app(appname, appsize)
+	elif function == "e":
+
+                # prompt the user to enter the name of the app they wish to remove
+                # call remove_app function
+                
+		appname = input("App name to remove: ")
+		phone.remove_app(appname)
+	elif function == "q":
+		print("Goodbye!")
+		break
+	else:
+		print("Invalid input.")
