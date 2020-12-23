@@ -1,0 +1,81 @@
+# Import random module to randomly generate values for the dice
+
+import random
+
+# Make sure user inputs a valid number for sides on dice
+
+while True:
+    sidesOnDice = int(input("How many sides on your dice (4, 6, 8, 10, 12, or 20)? " ))
+    if sidesOnDice not in (4, 6, 8, 10, 12, 20):
+        print("Invalid size, try again.")
+    else:
+        print ("Thanks, here we go!")
+        break
+
+# Initialize variables
+
+score = 0
+attempts = 1
+doubles = 0
+high = 0
+highlow = 0
+sumissize = 0
+sumdie1 = 1
+sumdie2 = 1
+
+# While snake eyes is not achieved (or score == 0), keep on running the while loop
+
+# Add one to each variable as necessary
+
+# Multiple "if" statements, as many as are true will run
+
+while score == 0:
+    die1 = random.randint(1, sidesOnDice)
+    die2 = random.randint(1, sidesOnDice)
+    print(attempts, ". ", "die #1 is ", die1, " ", "and die #2 is ", die2, " ", sep = "")
+    if die1 == die2:
+        print ("Doubles!")
+        doubles = doubles + 1
+        if die1 == die2 == 1:
+            print("Snake Eyes!")
+            score += score
+            break
+    if die1 == die2 == 6:
+        print("High!")
+        high = high + 1
+    if (die1 == 1 and die2 == 6) or (die1 == 6 and die2 == 1):
+        print ("High / Low!")
+        highlow = highlow + 1
+    if (die1 + die2 == sidesOnDice):
+        print ("Sum value is size value!")
+        sumissize = sumissize + 1
+    attempts += 1
+    sumdie1 = sumdie1 + die1
+    sumdie2 = sumdie2 + die2
+
+print("")
+print("You finally got snake eyes on roll #", attempts)
+
+# Calculate the percent of times each type of roll was rolled by dividing it by total rolls and multiplying by 100
+
+percentOfDoubles = doubles/attempts * 100
+print("Along the way you rolled DOUBLES ", doubles, " ", "times.", " (", round(percentOfDoubles, 2), "% of all rolls were doubles", ")", sep = "")
+
+percentOfHigh = high/attempts * 100
+print("Along the way you rolled TWO HIGH VALUES ", high, " ", "times.", " (", round(percentOfHigh, 2), "% of all rolls were two high values", ")", sep = "")
+
+percentOfHighLow = highlow/attempts * 100
+print("Along the way you rolled HIGH/LOW ", highlow, " ", "times.", " (", round(percentOfHighLow, 2), "% of all rolls were high/low", ")", sep = "")
+
+percentOfSumIsSize = sumissize/attempts * 100
+print("Along the way you rolled SUM VALUE ", sumissize, " ", "times.", " (", round(percentOfSumIsSize, 2), "% of all rolls were a sum value", ")", sep = "")
+
+# Average roll for each die is sum / attempts
+
+averagedie1 = sumdie1 / attempts
+
+averagedie2 = sumdie2 / attempts
+
+print("Average roll for die #1: ", round(averagedie1, 2))
+print("Average roll for die #2: ", round(averagedie2, 2))
+
