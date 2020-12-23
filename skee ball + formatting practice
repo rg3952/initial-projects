@@ -1,0 +1,101 @@
+import random
+import time
+
+# Constants, coordinates of the centers of the circles
+
+centerfortyX = 24
+centerfortyY = 5
+
+centerthirtyX = 24
+centerthirtyY = 26
+
+centertwentyX = 24
+centertwentyY = 38
+
+centertenX = 24
+centertenY = 38
+
+# Get start time and end time to determine execution time
+
+start = time.time()
+
+# Keep prompting the user until they enter a valid number of throws 
+
+while True:
+    numthrows = int(input("How many throws would you like to simulate? "))
+    
+    if numthrows < 0:
+        print("Sorry, try again.")
+    else:
+        print("")
+        print("Done!")
+        break
+
+end = time.time()
+
+print("Execution time: ", round(end-start, 2), "seconds")
+
+# Initialize an arbitrary variable "z", and add one every time an iteration of the while loop completes. Then, stop the while loop when z == numthrows.
+
+z = 0
+
+# Initialize a series of variables, keep adding one as they satify the "if" conditions they correspond to
+
+forty = 0
+thirty = 0
+twenty = 0
+ten = 0
+misses = 0
+
+while z < numthrows: 
+    x = random.uniform(0, 48)
+    y = random.uniform(0, 60)
+    
+    distancefortyX = ( x - centerfortyX ) ** 2
+    distancefortyY = ( y - centerfortyY ) ** 2
+    distanceforty = (distancefortyX + distancefortyY) ** (1/2)
+
+    distancethirtyX = ( x - centerthirtyX ) ** 2
+    distancethirtyY = ( y - centerthirtyY ) ** 2
+    distancethirty = (distancethirtyX + distancethirtyY) ** (1/2)
+
+    distancetwentyX = ( x - centertwentyX ) ** 2
+    distancetwentyY = ( y - centertwentyY ) ** 2
+    distancetwenty = (distancetwentyX + distancetwentyY) ** (1/2)
+
+    distancetenX = ( x - centertenX ) ** 2
+    distancetenY = ( y - centertenY ) ** 2
+    distanceten = (distancetenX + distancetenY) ** (1/2)
+
+    if distanceforty <= 4:
+        forty = forty + 1
+    elif distancethirty <= 5:
+        thirty = thirty + 1
+    elif distancetwenty <= 6:
+        twenty = twenty + 1
+    elif distanceten <= 18:
+        ten = ten + 1
+    else:
+        misses = misses + 1
+
+    z = z + 1
+
+# Percent of time the ball lands in each area = area / total throws * 100
+
+percentmisses = misses/numthrows * 100
+percentten = ten/numthrows * 100
+percenttwenty = twenty/numthrows * 100
+percentthirty = thirty/numthrows * 100
+percentforty = forty/numthrows * 100
+
+print("")
+print("* ", format("Total throws:", "<20s"), "{:<14,d}".format(numthrows), numthrows/numthrows * 100, "%", sep = "")
+print("* ", format("Misses:", "<20s") , "{:<14,d}".format(misses, "<14d"), round(percentmisses, 2), "%", sep = "")
+print("* ", format("10 points:", "<20s"),  "{:<14,d}".format(ten, "<14d"), round(percentten, 2), "%", sep = "")
+print("* ", format("20 points:", "<20s"), "{:<14,d}".format(twenty, "<14d"), round(percenttwenty, 2), "%", sep = "")
+print("* ", format("30 points:", "<20s"), "{:<14,d}".format(thirty, "<14d"), round(percentthirty, 2), "%", sep = "")
+print("* ", format("40 points:", "<20s"), "{:<14,d}".format(forty, "<14d"), round(percentforty, 2), "%", sep = "")
+
+
+
+
