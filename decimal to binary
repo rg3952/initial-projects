@@ -1,0 +1,43 @@
+result = ""
+x = 0
+
+# if the input is greater than 0, run, otherwise ask for another input
+
+while x == 0:
+    number = int(input("Enter a number greater than or equal to 0: "))
+
+# store number as originalnumber to refer back to later, as number will change but original number will always be inputted value
+
+    originalnumber = number
+    while number > 0:
+        remainder = number % 2
+        if remainder > 0:
+
+#bit variables used to add onto input number
+            
+            bit1 = "1"
+        else:
+            bit1 = "0"
+
+# binary adds bits as loop cycles through
+
+        binary = bit1 + result
+        print(number, "%", 2, "=", remainder, "--->", binary)
+        print(number, "//", 2, "=", number//2)
+        number = number // 2
+        result = binary
+        
+# adds one to the initialized variable x (starts at 0) so the while loop knows when to stop
+
+        x = x + 1
+        print("")
+        print(originalnumber , "in binary is", result)
+        
+# always true
+
+    if originalnumber == 0:
+        print(originalnumber , "in binary is", "0000")
+        break
+    if number < 0:
+        print("Invalid, try again.")
+
