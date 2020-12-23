@@ -1,0 +1,30 @@
+import turtle
+
+# ask user to input a number of sides
+
+sides = int(input("How many sides? (Enter a number between 3 and 12, inclusive): "))
+
+# initialize a variable
+
+x = 0
+
+# while the side value is between 3 and 12 inclusive, move the cursor forward and keep rotating to the left until the number of sides desired are achieved
+
+while True:
+    if sides in range(3, 13):
+        turtle.fd(50)
+        a = (((sides-2) * 180) / sides)
+        turtle.left(180-a)
+
+# keep adding one to this variable every time the while loop iterates so that it stops drawing the shape after the number of desired sides are achieved
+
+        x += 1
+        if x == sides:
+            break
+
+# prompt the user to enter a different value if their original value was out of range
+
+    else:
+        print("That is out of range. Try again.")
+        sides = int(input("How many sides? (Enter a number between 3 and 12, inclusive): "))
+    
