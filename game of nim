@@ -1,0 +1,127 @@
+sticksToRemove = 0
+userTurn = True
+
+# Tell the user their input it invalid if it is not between 10 and 100, otherwise, ask them to input a number of sticks to take
+
+while True:
+    sticksLeft = int(input("How many sticks (10-100)? "))
+    
+    if sticksLeft > 100:
+        print("Sorry, that's too many sticks. Try again.")
+        print("")
+    elif sticksLeft < 10:
+        print("Sorry, that's too few sticks. Try again.")
+        print("")
+    else:
+        print("Great Let's play ...")
+        print("")
+        break
+
+print("Turn: Player 1")
+print( "There are", sticksLeft, "sticks on the table") 
+
+while sticksLeft > 0:
+
+# Only run this loop if it is Player 1's turn and there are sticks left
+
+    while userTurn == True and sticksLeft > 0:
+
+# Have the user input a value for number of sticks removed 
+
+        sticksToRemovePlayer1 = int(input("How many sticks do you want to take (1, 2 or 3)? " ))
+
+# If the input is not valid, tell the user
+
+        if sticksToRemovePlayer1 > 3:
+            print("Sorry, that's not a valid number.")
+            print("")
+            print("Turn: Player 1")
+
+# Need to print "There is" instead of "There are" if there's only 1 stick left
+
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table")
+        elif sticksToRemovePlayer1 < 1:
+            print("Sorry, that's not a valid number.")
+            print("")
+            print("Turn: Player 1")
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table")
+        elif sticksLeft - sticksToRemovePlayer1 < 0:
+            print("Sorry, that's not a valid number.")
+            print("")
+            print("Turn: Player 1")
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table")
+
+# userTurn is false if they input a valid number, because then it becomes the other person's turn
+
+        else:
+            sticksLeft -= sticksToRemovePlayer1
+            print("")
+            if sticksLeft > 0:
+                print("Turn: Player 2")
+                if sticksLeft > 1:
+                    print( "There are", sticksLeft, "sticks on the table")
+                else:
+                    print ("There is", sticksLeft, "stick on the table") 
+
+            userTurn = False                       
+
+# Same procedure for Player 2
+
+    while userTurn == False and sticksLeft > 0:
+        
+        sticksToRemovePlayer2 = int(input("How many sticks do you want to take (1, 2 or 3)? " ))
+
+        if sticksToRemovePlayer2 > 3:
+            print("Sorry, that's not a valid number.")
+            print("")
+            print("Turn: Player 2")
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table")
+        elif sticksToRemovePlayer2 < 1:
+            print("Sorry, that's not a valid number.")
+            print("")
+            print("Turn: Player 2")
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table") 
+        elif sticksLeft - sticksToRemovePlayer2 < 0:
+            print("Sorry, that's not a valid number.") #Give user error!
+            print("")
+            print("Turn: Player 2")
+            if sticksLeft > 1:
+                print( "There are", sticksLeft, "sticks on the table")
+            else:
+                print ("There is", sticksLeft, "stick on the table")
+        else:
+            sticksLeft -= sticksToRemovePlayer2
+            print("")
+            if sticksLeft > 0:
+                print("Turn: Player 1")
+                if sticksLeft > 1:
+                    print( "There are", sticksLeft, "sticks on the table")
+                else:
+                    print ("There is", sticksLeft, "stick on the table") 
+
+#userTurn refers to Player 1's turn, in this case, true
+                    
+            userTurn = True
+           
+if userTurn == True:
+    print("There are no sticks left on the table!  Game over.")
+    print("Player 1 wins!")
+else:
+    print("There are no sticks left on the table!  Game over.")
+    print("Player 2 wins!")
+
