@@ -1,0 +1,41 @@
+# import module to generate random number
+
+import random
+
+# initialize guesses taken, which starts at 0
+
+guessesTaken = 0
+
+# pick number between 1 and 20
+
+number = random.randint(1, 20)
+
+print("I am thinking of a number between 1 and 20. You have six tries to guess, after which the program will automatically terminate.")
+
+# ask a series of questions to determine whether guess is too low, high, or invalid
+
+# if they get the answer before six guesses are up, they win, if not, the program terminates
+
+# do not count an invalid guess as one of the six total guesses
+
+while int(guessesTaken) < 6:
+    guess = int(input("Take a guess: "))
+    if guess not in range(1, 21):
+        print("This number is not valid. Please try again.")
+    elif guess < number:
+        guessesTaken = guessesTaken + 1
+        print('Your guess is too low.')
+        if guessesTaken == 6:
+            print("You failed.")
+    elif guess > number:
+        guessesTaken = guessesTaken + 1
+        print('Your guess is too high.')
+        if guessesTaken == 6:
+            print("You failed.")
+    else:
+        guessesTaken = guessesTaken + 1
+        guessesTaken = str(guessesTaken)
+        print('Good job! You guessed my number in ' + guessesTaken + ' guesses!')
+        break
+  
+
