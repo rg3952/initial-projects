@@ -1,0 +1,76 @@
+from datetime import datetime
+
+print("Enter the show start date and the contestant's birthdate to determine their age at the start of taping.")
+date_input1 = input("Enter start date (MMDDYYYY): ")
+date_input2 = input("Enter birth date (MMDDYYYY): ")
+
+# convert birthdate to month day, year format
+
+birthdate = datetime.strptime(date_input2, '%m%d%Y').strftime('%B %d, %Y')
+
+# compute month, day, and year, individually of birth date
+
+yearofbirthdate = datetime.strptime(date_input2, '%m%d%Y').strftime('%Y')
+
+monthofbirthdate = datetime.strptime(date_input2, '%m%d%Y').strftime('%m')
+
+# set a variable for month of birth date that is a string rather than a number so that it can correctly print
+
+monthofbirthdatenonnumeric = datetime.strptime(date_input2, '%m%d%Y').strftime('%B')
+
+dayofbirthdate = datetime.strptime(date_input2, '%m%d%Y').strftime('%d')
+
+# print birthdate, need to figure out day of birth in order to determine the correct suffix
+# use int of birthdate to avoid having a leading zero 
+
+if int(dayofbirthdate) == 1 or int(dayofbirthdate) == 21 or int(dayofbirthdate) == 31:
+    print("The contestant was born on ",  monthofbirthdatenonnumeric, " ", int(dayofbirthdate), "st", ", ", yearofbirthdate, sep = "")
+elif int(dayofbirthdate) == 2 or int(dayofbirthdate) == 22:
+    print("The contestant was born on ",  monthofbirthdatenonnumeric, " ", int(dayofbirthdate), "nd", ", ", yearofbirthdate, sep = "")
+elif int(dayofbirthdate) == 3 or int(dayofbirthdate) == 23:
+    print("The contestant was born on ",  monthofbirthdatenonnumeric, " ", int(dayofbirthdate), "rd", ", ", yearofbirthdate, sep = "")
+else:
+    print("The contestant was born on ",  monthofbirthdatenonnumeric, " ", int(dayofbirthdate), "th", ", ", yearofbirthdate, sep = "")
+
+# compute month, day, and year, individually of start date
+
+yearofstartdate = datetime.strptime(date_input1, '%m%d%Y').strftime('%Y')
+
+monthofstartdate = datetime.strptime(date_input1, '%m%d%Y').strftime('%m')
+
+dayofstartdate = datetime.strptime(date_input1, '%m%d%Y').strftime('%d')
+
+# use values above to calculate differences of month, day, and year between start date and birthdate 
+
+diffofyears = int(yearofstartdate) - int(yearofbirthdate)
+
+diffofmonths = int(monthofstartdate) - int(monthofbirthdate)
+
+diffofdays = int(dayofstartdate) - int(dayofbirthdate)
+
+# if the difference of years is greater than 22, the contestant is definitely older than 21
+
+if (diffofyears >= 22):
+    print("ELIGIBLE: The contestant will be 21 by the time taping begins")
+
+# if the difference of years is 21 and 0 months or days, it's the contestant's 21st birthday and he/she is eligible
+# if the difference of years is 21 and 0 months, but the day of start date is greater than the day of birth date, they have turned 21 already and are thus eligible
+# if the difference of years is 21 and 0 months, but the day of birth date is greater than the day of start date, they have not turned 21 already and are not eligible
+# if the difference of years is 21 but the value of the startdate month is greater than that of the birthdate month, they have turned 21 and are thus eligible
+
+elif ((diffofyears == 21) and (diffofmonths == 0 and diffofdays == 0)):
+    print("ELIGIBLE: The contestant will be 21 by the time taping begins")
+elif ((diffofyears == 21) and (diffofmonths == 0 and dayofstartdate > dayofbirthdate)):
+    print("ELIGIBLE: The contestant will be 21 by the time taping begins")
+elif ((diffofyears == 21) and (diffofmonths == 0 and dayofstartdate < dayofbirthdate)):
+    print("NOT ELIGIBLE: The contestant won't be 21 by the time taping begins")
+elif (((diffofyears == 21) and (monthofstartdate > monthofbirthdate))):
+    print("ELIGIBLE: The contestant will be 21 by the time taping begins")
+elif (((diffofyears == 21) and (monthofbirthdate > monthofstartdate))):
+    print("NOT ELIGIBLE: The contestant won't be 21 by the time taping begins")
+
+# if the difference of years is 20 or lower, the contestant is definitely younger than 21
+
+else:
+    print("NOT ELIGIBLE: The contestant won't be 21 by the time taping begins")
+
