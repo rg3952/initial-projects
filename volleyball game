@@ -1,0 +1,74 @@
+# Determines the winner of a volleyball match, assuming there are between 2-3 sets
+
+import sys
+
+# Have the user enter scores after match 1 for both teams
+
+match1team1score = int(input("Enter the score that team 1 got on match 1: "))
+match1team2score = int(input("Enter the score that team 2 got on match 1: "))
+
+# Terminate the program if one of the two scores is not 25, if one of them is, continue asking questions
+
+if match1team1score != 25 and match1team2score != 25:
+    print("You have entered invalid scores. The program will now stop running.")
+    sys.exit()
+
+# Have the user enter scores after match 2 for both teams
+
+match2team1score = int(input("Enter the score that team 1 got on match 2: "))
+match2team2score = int(input("Enter the score that team 2 got on match 2: "))
+
+# Terminate the program if one of the two scores is not 25, if one of them is, continue asking questions
+
+if match2team1score != 25 and match2team2score != 25:
+    print("You have entered invalid scores. The program will now stop running.")
+    sys.exit()
+
+# Determine which team won the first and second sets; if the same team won both, complete the program by outputting that that team won.
+# If different teams won each set, ask the user for the scores from the third set.
+
+if match1team1score > match1team2score:
+    print("Team 1 won the first set!")
+    if match2team1score > match2team2score:
+        print("Team 1 won the game!")
+    else:
+        print("Team 2 won the second set! That means there has to be a third deciding set.")
+        match3team1score = int(input("Enter the score that team 1 got on match 3: "))
+        match3team2score = int(input("Enter the score that team 2 got on match 3: "))
+        
+# Terminate the program if one of the two scores is not 25
+
+        if match3team1score != 25 and match3team2score != 25:
+             print("You have entered invalid scores. The program will now stop running.")
+             sys.exit()
+             
+# Determine based off of set 3 which team won the game
+
+        elif match3team1score > match3team2score:
+             print("Team 1 won the game!")
+        else:
+             print("Team 2 won the game!")
+else:
+     print("Team 2 won the first set!")
+     if match2team2score > match2team1score:
+         print("Team 2 won the game!")
+     else:
+         print("Team 1 won the second set! That means there has to be a third deciding set.")
+         match3team1score = int(input("Enter the score that team 1 got on match 3: "))
+         match3team2score = int(input("Enter the score that team 2 got on match 3: "))
+         
+# Terminate the program if one of the two scores is not 25
+
+         if match3team1score != 25 and match3team2score != 25:
+             print("You have entered invalid scores. The program will now stop running.")
+             sys.exit()
+             
+# Determine based off of set 3 which team won the game
+
+         elif match3team1score > match3team2score:
+             print("Team 1 won the game!")
+         else:
+             print("Team 2 won the game!")
+
+print("")
+print("Thanks for using my program!")
