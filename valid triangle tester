@@ -1,0 +1,55 @@
+import random
+
+print("Now I will try to generate a triangle: ")
+
+# generate random values for each coordinate
+
+point1x = random.randint(-100, 100)
+point1y = random.randint(-100, 100)
+
+point2x = random.randint(-100, 100)
+point2y = random.randint(-100, 100)
+
+point3x = random.randint(-100, 100)
+point3y = random.randint(-100, 100)
+
+# print out values for user to see
+
+print("Point 1: ", "(", point1x, ",", point1y, ")", sep="")
+print("Point 2: ", "(", point2x, ",", point2y, ")", sep="")
+print("Point 3: ", "(", point3x, ",", point3y, ")", sep="")
+
+print("")
+
+print("The length of each side of my shape is: ")
+
+# s1 = point 1 to 2
+# s2 = point 2 to 3
+# s3 = point 1 to 3
+
+# start executing the distance formula
+
+s1_beforesqrt = (point1x-point2x)**2 + (point1y - point2y)**2
+s2_beforesqrt = (point2x-point3x)**2 + (point2y - point3y)**2
+s3_beforesqrt = (point1x-point3x)**2 + (point1y - point3y)**2
+
+# complete the distance formula computation
+
+s1 = (s1_beforesqrt)**(1/2)
+s2 = (s2_beforesqrt)**(1/2)
+s3 = (s3_beforesqrt)**(1/2)
+
+# print out distances
+
+print("Side 1:", (s1))
+print("Side 2:", (s2))
+print("Side 3:", (s3))
+
+print("")
+
+# check to see if user inputted values make a real triangle
+
+if s1 + s2 > s3 and s2 + s3 > s1 and s3 + s1 > s2:
+    print("This is a valid triangle! I win!")
+else:
+    print("This is not a valid triangle. I lose!")
