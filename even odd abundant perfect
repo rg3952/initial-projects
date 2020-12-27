@@ -1,0 +1,90 @@
+# if remainder is 0, it's even
+
+def is_even (a):
+    if a % 2 == 0:
+        return True
+    else:
+        return False
+    
+# if remainder is not 0, it's odd
+
+def is_odd (a):
+    if a % 2 != 0:
+        return True
+    else:
+        return False
+
+# if it does not have any factors other than 1 and itself, it's prime
+
+def is_prime (a):
+    for i in range (2, a):
+        if a % i == 0:
+            return False
+            break
+        else:
+            if i == (a - 1):
+                return True
+                break
+
+# perfect number is a positive integer that is equal to the sum of its positive divisors
+
+def is_perfect(a):
+    sum = 0
+    for x in range(1, a):
+        if a % x == 0:
+            sum += x
+    return sum == a
+
+# abundant number is a number that is smaller than the sum of its proper divisors
+
+def is_abundant(a):
+    factors = []
+    for i in range(1, a + 1):
+       if a % i == 0:
+           if i != a:
+               factors.append(i)
+    if sum(factors) > a:
+        return True
+    else:
+        return False
+
+while True:
+    starting = int(input("Enter starting number: "))
+
+    if starting >= 0:
+        break
+    else:
+        print("Invalid, try again")
+
+while True:
+    ending = int(input("Enter ending number: "))
+
+    if ending > starting:
+        break
+    else:
+        print("Invalid, try again")
+
+# test every number between starting and ending value to see which categories it falls into
+
+for i in range (starting, ending + 1):
+    str_i = str(i)
+    numbersare = (str_i + " is...")
+    x = is_even(i)
+    if x == True:
+        numbersare += (" even")
+    y = is_odd(i)
+    if y == True:
+        numbersare += (" odd")
+        z = is_prime(i)
+        if z == True:
+            numbersare += (" prime")
+    m = is_perfect(i)
+    if m == True:
+        numbersare += (" perfect")
+    n = is_abundant(i)
+    if n == True:
+        numbersare += (" abundant")
+    print(numbersare)
+    
+    
+
