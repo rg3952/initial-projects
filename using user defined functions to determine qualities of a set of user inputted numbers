@@ -1,0 +1,140 @@
+# define functions that determine qualities of the user inputted values 
+
+def is_square(a):
+    if a ** (0.5) % 1 == 0:
+        return True
+    else:
+        return False
+    
+def length(a):
+    global dig
+    dig = int(len(str(a)))
+
+def is_odd (a):
+    if a % 2 != 0:
+        return True
+    else:
+        return False
+
+def is_prime (a):
+    for i in range (2, a):
+        if a % i == 0:
+            return False
+            break
+        else:
+            if i == (a - 1):
+                return True
+                break
+
+def is_perfect(a):
+    sum = 0
+    for x in range(1, a):
+        if a % x == 0:
+            sum += x
+    return sum == a
+
+# initialize variables such that 1 is added every time a certain category evaluates to true
+
+counter = 0
+sums = 0
+avg = 0
+least = 0
+greatest = 0
+shortest = 0
+longest = 0
+odd = 0
+prime = 0
+square = 0
+
+while True:
+    user_inp = input("Enter a positive integer (or 'end' to end): ")
+
+    # if user enters "end" and the loop has not iterated any times before, no valid numbers have been inputted
+    
+    if user_inp == "end":
+        if counter == 0:
+            print("You entered no valid numbers.")
+        break
+
+    # if the user inputted value is greater than or equal to 0, it is valid and a series of questions about the value can be asked
+    
+    elif int(user_inp) >= 0:
+
+        # automatically add 1 to counter every time the loop iterates
+        
+        counter += 1
+
+        # acculumate sum of all user inputted values to later calculate the average
+        
+        sums += int(user_inp)
+        if counter > 0:
+            avg = sums / counter
+
+        # if the user has only entered 1 value, the least and greatest value are both that one value, and the shortest and longest value are both the length of that one value
+        if counter == 1:
+            least = int(user_inp)
+            greatest = int(user_inp)
+            shortest = len(str(int(user_inp)))
+            longest = len(str(int(user_inp)))
+        else:
+            # if the user inputted value is less than least, make it the least
+        
+            if least > int(user_inp):
+                least = int(user_inp)
+
+            # if counter is not equal to 1 and the user inputted value is greater than the greatest, turn the user inputted value into the greatest
+        
+            if greatest < int(user_inp):
+                greatest = int(user_inp)
+
+            # if the length of the user input is shorter than shortest, turn the user input into the shortest
+
+            if shortest > len(user_inp):
+                shortest = len(user_inp)
+
+            # if the length of the user input is longer than longest, turn the user input into the longest
+            
+            if longest < len(user_inp):
+                longest = len(user_inp)
+
+        # add one to the respective counter for each value that is odd
+        
+        if is_odd(int(user_inp)) == True:
+            odd += 1
+
+        # add one to the respective counter for each value that is prime
+        
+        if is_prime(int(user_inp)) == True:
+            prime += 1
+            
+        # add one to the respective counter for each value that is square
+        
+        if is_square(int(user_inp)) == True:
+            square += 1
+
+    # if the user input is not 0 or above 0, it is not valid. reprompt.
+    
+    else:
+        print("Invalid entry. Must be 0 or positive.")
+
+if counter > 0:
+
+    # format the column so that it is the length of the longest title
+    
+    formattedcol1 = "<"+str(len("Num. Squares"+" "))+"s"
+    formatted_avg = format(avg, '.2f')
+    formattedcol2 = '>'+str(longest+len(formatted_avg))+'s'
+    print()
+    print("You entered", counter, "numbers.")
+
+    # format based on the amount of spaces in the longest number
+    
+    print(format("Largest:", formattedcol1), format(str(greatest), formattedcol2))
+    print(format("Smallest:", formattedcol1), format(str(least), formattedcol2))
+    print(format("Average:", formattedcol1), format(str(formatted_avg), formattedcol2))
+    print(format("Shortest:", formattedcol1), format(str(shortest) + " digit", formattedcol2))
+    print(format("Longest:", formattedcol1), format(str(longest) + " digit", formattedcol2))
+    print(format("Num. Odd:", formattedcol1), format(str(odd), formattedcol2))
+    print(format("Num. Primes:", formattedcol1), format(str(prime), formattedcol2))
+    print(format("Num. Squares:", formattedcol1), format(str(square), formattedcol2))
+
