@@ -1,0 +1,146 @@
+# define a function that will prompt the user to enter a starting and ending value; make both of these variables global so that they can be accessed outside of the user defined function
+
+def get_input():
+    global start
+    global end
+
+    while True:
+        start = int(input("Enter starting number (positive only): "))
+        if start > 0:
+            break
+        else:
+            print("Invalid, try again.")
+
+    while True:
+        end = int(input("Enter ending number (greater than starting number): "))
+        if end > start:
+            break
+        else:
+            print("Invalid, try again.")
+
+# define a function for every type of number, following the convention from prior programs
+
+def is_even (a):
+    if a % 2 == 0:
+        return True
+    else:
+        return False
+    
+def is_odd (a):
+    if a % 2 != 0:
+        return True
+    else:
+        return False
+
+def is_prime (a):
+    for i in range (2, a):
+        if a % i == 0:
+            return False
+            break
+        else:
+            if i == (a - 1):
+                return True
+                break
+
+def is_perfect(a):
+    sum = 0
+    for x in range(1, a):
+        if a % x == 0:
+            sum += x
+    return sum == a
+
+
+def is_abundant(a):
+    factors = []
+    for i in range(1, a + 1):
+       if a % i == 0:
+           if i != a:
+               factors.append(i)
+    if sum(factors) > a:
+        return True
+    else:
+        return False
+
+# create a while loop to obey the request of the user's choice, only stop running the loop when the user quits
+
+while True:
+    print()
+    print("Main Menu")
+    print()
+    print("1 - Find all prime numbers within a given range")
+    print("2 - Find all perfect numbers within a given range")
+    print("3 - Find all abundant numbers within a given range")
+    print("4 - Chart all even, odd, prime, perfect, and abundant numbers within a given range")
+    print("5 - Quit")
+    print()
+    choice = input("Your choice: ")
+    if choice == "1":
+        get_input()
+        print()
+        print("All prime numbers between", start, "and", end)
+        print("##############")
+
+        # print all prime numbers by running all of the values in the range the user enters through a for loop and printing the values that fit the description -- same procedure for every type of number
+        
+        for i in range(start, end+1):
+            if is_prime(i) == True:
+                print(i)
+        print("##############")
+    elif choice == "2":
+        get_input()
+        print()
+        print("All perfect numbers between", start, "and", end)
+        print("##############")
+        for i in range(start, end+1):
+            if is_perfect(i) == True:
+                print(i)
+        print("##############")
+    elif choice == "3":
+        get_input()
+        print()
+        print("All abundant numbers between", start, "and", end)
+        print("##############")
+        for i in range(start, end+1):
+            if is_abundant(i) == True:
+                print(i)
+        print("##############")
+    elif choice == "4":
+        get_input()
+
+        # format table so that the leftmost part of the heading aligns with the corresponding X that signifies which number the category falls into
+        
+        fmt = len(str(end)+"Number")
+        print()
+        print(format("Number", '<'+str(fmt)+'s'), format("Even",'<9s'), format("Odd",'<9s'), format("Prime",'<9s'), format("Perfect",'<9s'), format("Abundant",'<9s'))
+        for i in range(start, end+1):
+            even = ""
+            odd = ""
+            prime = ""
+            perfect = ""
+            abundant = ""
+            fmt_col = format(i, '<'+str(fmt)+'d')
+
+            # add an x under every column heading that evaluates to True
+            
+            if is_even(i) == True:
+                even = "x"
+
+            # can never be prime and not odd
+            
+            elif is_odd(i) == True:
+                odd = "x"
+                if is_prime(i) == True:
+                    prime = "x"
+            if is_perfect(i) == True:
+                perfect = "x"
+            if is_abundant(i) == True:
+                    abundant = "x"
+
+            print(fmt_col, format(even,'<9s'), format(odd,'<9s'), format(prime,'<9s'), format(perfect,'<9s'), format(abundant,'<9s'))
+    elif choice == "5":
+        print()
+        print("Goodbye!")
+        break           
+    else:
+        print("I don't understand that ....")
+        print()
